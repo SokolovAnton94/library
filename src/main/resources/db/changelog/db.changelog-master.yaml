@@ -1,0 +1,129 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/db.changelog-createBooks.yaml
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - changeSet:
+      id: 1
+      author: AntonSokolov@ya.com
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: email
+                  type: varchar(50)
+  - changeSet:
+      id: 2
+      author: AntonSokolov@ya.com
+      comment: "Create users"
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "admin"
+              - column:
+                  name: password
+                  value: "$2a$08$oQPBOjK4IYzy/Uu/xLYcuuzjtTZYWFkAEJ3vO8YGShSu5hgl7gfG."
+              - column:
+                  name: email
+                  value: "admin@server.com"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "user"
+              - column:
+                  name: password
+                  value: "$2a$08$oEdzP69FXLKjbtmjJdFAB.b/KX10GJldY8lyNsDCcSrL/Ya.dezGW"
+              - column:
+                  name: email
+                  value: "user@server.com"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "TestUser"
+              - column:
+                  name: password
+                  value: "$2a$08$Ow8dNypWoYchASvVRCrAyOQikwPBUkHd9hZ3bSp6nuwKd5vdddInS"
+              - column:
+                  name: first_name
+                  value: "Test"
+              - column:
+                  name: last_name
+                  value: "User"
+              - column:
+                  name: email
+                  value: "testuser@server.com"
+      rollback:
+        - delete:
+            tableName: users
+            where: username in ('admin', 'user', 'TestUser')
+  - changeSet:
+      id: "3"
+      author: AntonSokolov@ya.com
+      changes:
+        - createTable:
+              tableName: user_role
+              columns:
+                - column:
+                    name: user_id
+                    type: BIGINT
+                - column:
+                    name: role
+                    type: VARCHAR(255)
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: "1"
+              - column:
+                  name: role
+                  value: "ADMIN"
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: "2"
+              - column:
+                  name: role
+                  value: "USER"
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  value: "3"
+              - column:
+                  name: role
+                  value: "USER"

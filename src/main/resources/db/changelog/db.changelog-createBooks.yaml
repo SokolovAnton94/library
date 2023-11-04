@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-createBooks.yaml
+  - changeSet:
+      id: 1
+      author: AntonSokolov@ya.com
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: is_order
+                  type: boolean
+                  defaultValue: "false"
+                  constraints:
+                    unique: false
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: Anton_Sokolov@epam.com
+      comment: "Create books"
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Adventures of Huckleberry Finn"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Around The World in 80 Days"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Don Quixote"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Great Gatsby"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "War and Peace"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Brothers Karamazov"
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Catcher in the Rye"
+      rollback:
+        - delete:
+            tableName: books
+            where: title in ('createBooks')

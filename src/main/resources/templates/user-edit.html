@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="~{navigation :: navi(Users)}"></div>
+<h2 align="left" style="color:Black">User</h2>
+    <form th:action="@{/user}" method="post">
+        <input type="text" name="username" th:value="${user.username}">
+
+        <div th:each="role:${role}">
+            <label><input th:type="checkbox"
+                          th:name="${role}"
+                          th:value="${role}"
+                          th:text="${role}"
+                          th:checked="${#lists.contains(user.role, role)}">
+            </label>
+        </div>
+        <input type="hidden" th:value="${user.id}" name="userId">
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

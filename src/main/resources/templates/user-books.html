@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="~{navigation :: navi(Books)}"></div>
+<h2 align="center" style="color:Black">Books</h2>
+<table class="text-center align-middle" border="2">
+    <tr>
+        <th align="center">Title</th>
+        <th align="center">Take/Return</th>
+        <th align="center">Ordered</th>
+    </tr>
+    <tr th:each="book : ${availableBooks}">
+        <td th:text="${book.title}">title</td>
+            <td>
+                <form action="#" th:action="@{/user-books}" method="post">
+                    <input type="hidden" th:value="${book.id}" name="id"/>
+                    <input type="hidden" th:value="${book.title}" name="title"/>
+                    <input type="hidden" th:value="${book.ordered}" name="ordered"/>
+                <button type="submit" class="button" name="action" value="take">Take</button>
+                </form>
+            </td>
+        <td align="center" th:text="${book.ordered}">order</td>
+    </tr>
+    <tr th:each="book, itemStat : ${usersBooks}">
+        <td th:text="${book.title}">title</td>
+        <td>
+            <form action="#" th:action="@{/user-books}" th:object="${bookDto}" method="post">
+                <input type="hidden" th:value="${book.id}" name="id"/>
+                <input type="hidden" th:value="${book.title}" name="title"/>
+                <input type="hidden" th:value="${book.user.id}" name="user.id"/>
+                <input type="hidden" th:value="${book.ordered}" name="ordered"/>
+                <button type="submit" class="button" name="action" value="return">Return</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

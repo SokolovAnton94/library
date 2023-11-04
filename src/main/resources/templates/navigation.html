@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+  <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="fluid-container" th:fragment="navi(activeTab)">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark ">
+    <a class="navbar-brand" th:href="@{/}">Library</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item" th:classappend="${activeTab == 'Home' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/}">Main Page<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li sec:authorize="hasAuthority('USER')" class="nav-item" th:classappend="${activeTab == 'Books' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/user-books}">List of books<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li sec:authorize="hasAuthority('ADMIN')" class="nav-item" th:classappend="${activeTab == 'Books' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/admin-books}">List of books (admin)<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li sec:authorize="hasAuthority('ADMIN')" class="nav-item" th:classappend="${activeTab == 'Order' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/orders}">Orders<span class="sr-only">(current)</span></a>
+        </li>
+
+        <li sec:authorize="hasAuthority('ADMIN')" class="nav-item" th:classappend="${activeTab == 'Users' ? 'active' : ''}">
+          <a class="nav-link" th:href="@{/user}">List of users</a>
+        </li>
+
+        <li sec:authorize="isAuthenticated()" class="nav-item">
+          <form th:action="@{/logout}" method="POST">
+            <input type="submit" class="btn btn-primary" value="Logout"/>
+          </form>
+        </li>
+
+        <li sec:authorize="isAnonymous()" class="nav-item">
+          <form th:action="@{/login}" method="GET">
+            <input type="submit" class="btn btn-primary" value="Login"/>
+          </form>
+        </li>
+
+        <li sec:authorize="isAnonymous()" class="nav-item">
+          <form th:action="@{/registration}" method="GET">
+            <input type="submit" class="btn btn-primary" value="Registration"/>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="visible-md" style="height:80px;"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  database:
+    image: "postgres"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: libraryPassword
+      POSTGRES_USER: library
+      POSTGRES_DB: library
+    ports:
+      - "5800:5432"

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="~{navigation :: navi('Order')}"></div>
+<h2 align="center" style="color:Black">Orders</h2>
+<table class="text-center align-middle" border="2">
+    <tr>
+        <th align="center">Book title</th>
+        <th align="center">Username</th>
+        <th align="center">Approve/Decline</th>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.book.title}">title</td>
+        <td td align="center" th:text="${order.user.username}">order</td>
+        <td>
+            <form action="#" th:action="@{/orders}" method="post">
+                <input type="hidden" th:value="${order.id}" name="id"/>
+                <input type="hidden" th:value="${order.book.id}" name="book.id"/>
+                <button type="submit" class="button" name="action" value="approve">Approve</button>
+            </form>
+            <form action="#" th:action="@{/orders}" method="post">
+                <input type="hidden" th:value="${order.id}" name="id"/>
+                <input type="hidden" th:value="${order.book.id}" name="book.id"/>
+                <button type="submit" class="button" name="action" value="decline">Decline</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
